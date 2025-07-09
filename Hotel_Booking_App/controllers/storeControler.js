@@ -58,8 +58,11 @@ exports.getHomeDetailes=(req,res,next)=>{
       console.log("Home not found ")
       return res.redirect("/homes");
     }
-    console.log("Here is your Home ID ",homeID,home);
+    else{
+           console.log("Here is your Home ID ",homeID,home);
   res.render('store/homeDetails',{home:home,pageTitle:` Home Details `});
+    }
+   
 
   })
   
