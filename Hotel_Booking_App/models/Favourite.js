@@ -29,8 +29,15 @@ module.exports= class Favourite{
 
   static addToFavourite(homeID,callback){
     Favourite.fetchAll(favouriteIDs=>{
-      favouriteIDs.push(homeID);
+      if(favouriteIDs.include(homeID)){
+        callback("Home is already favourite ");
+        
+      }
+      else{
+          favouriteIDs.push(homeID);
       fs.writeFile(favouriteFilePath,JSON.stringify(favouriteIDs),callback)
+      }
+      
     })
   }
   
