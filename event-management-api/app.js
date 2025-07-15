@@ -1,0 +1,14 @@
+const express = require('express');  
+const bodyParser = require('body-parser');  
+const dotenv = require('dotenv');  
+const eventRouters = require('./routes/eventRoute');  
+const userRouter = require('./routes/userRoute');  
+const errorHandler = require('./middlewares/errorHandler');  
+dotenv.config();  
+const app = express();  
+app.use(bodyParser.json());  
+app.use('/api/events', eventRouters);  
+app.use('/api/users', userRouter);  
+app.use(errorHandler);  
+const POST = process.env.POST || 5000;  
+app.listen(POST, () => console.log(`Server running on port localhost:${POST}`));  
