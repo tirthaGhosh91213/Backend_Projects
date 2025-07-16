@@ -47,24 +47,28 @@ module.exports= class Home{
       callback(home);
     })
   }
-  static deleteById(homeID,callback){
-    Home.fetchAll(homes=>{
-      const newHome=homes.filter(home =>{
-        if(home.ID !== homeID){
-          return true;
-        }
-        else{
-          return false;
-        }
-      })
-      fs.writeFile(homeFilePath,JSON.stringify(newHome),error=>{
-        if(error){
-          callback(error);
-          return;
-        }
-        Favourite.deleteById(homeID,callback);
-      })
-    })
-  }
+  static deleteById(homeID, callback) {
+  Home.fetchAll(homes => {
+    const newHome = [];
+
+    // Manually copy all homes except the one with matching ID
+    for (let i = 0; i < homes.length; i++) {
+      if (homes[i].ID !== homeID) {
+        newHome.push(homes[i]);
+      }
+    }
+
+    // Write updated home list to file
+    fs.writeFile(homeFilePath, JSON.stringify(newHome), error => {
+      if (error) {
+        return callback(error); // Return error if write fails
+      }
+
+      // Also delete from Favourite list
+      Favourite.deleteById(homeID, callback);
+    });
+  });
+}
+
 }
 

@@ -2,9 +2,9 @@ const express =require('express');
 
 const bodyParser=require('body-parser')
 
-const path =require('path')
+const path =require('path')                                                
 const rootDir=require("./util/path")
-
+                                                                                                                                                                                                                                                                                                                                       
 
 const app=express();
 app.set('view engine','ejs');
@@ -32,7 +32,7 @@ app.use((req,res,next)=>{
 app.use(errorController.error404)
 
 
- const PORT =3000;
+ const PORT =3001;
 app.listen(PORT,()=>{
   console.log(`Server running at : http://localhost:${PORT}/`)
 });

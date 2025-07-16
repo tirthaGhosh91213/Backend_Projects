@@ -29,9 +29,8 @@ module.exports= class Favourite{
 
   static addToFavourite(homeID,callback){
     Favourite.fetchAll(favouriteIDs=>{
-      if(favouriteIDs.include(homeID)){
-        callback("Home is already favourite ");
-        
+      if(favouriteIDs.includes(homeID)){
+        return callback('Already added to favourites');
       }
       else{
           favouriteIDs.push(homeID);
