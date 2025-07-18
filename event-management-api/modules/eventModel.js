@@ -63,12 +63,28 @@ const getParticipantsInLast30Days = async (userId) => {
   );
   return result.rows;
 };
-
+const getUpcomingEventsForUser = async (userId) => {
+  const result = await pool.query(
+    `SELECT 
+      e.id AS event_id,
+      e.title,
+      e.location,
+      e.date_time
+    FROM registrations r
+    JOIN events e ON r.event_id = e.id
+    WHERE r.user_id = $1
+      AND e.date_time BETWEEN NOW() AND NOW() + INTERVAL '30 days'
+    ORDER BY e.date_time ASC`,
+    [userId]
+  );
+  return result.rows;
+};
 module.exports = {
   createEvent,
   getEventById,
   getRegistrationsByEventId,
   getParticipantsInLast30Days,
+  getUpcomingEventsForUser,
   registerUserToEvent,
   cancelRegistration,
   listUpcomingEvents,

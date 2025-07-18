@@ -67,6 +67,14 @@ exports.listUpcoming = async (req, res, next) => {
     next(err);
   }
 };
+exports.upcomingEventsForUser = async (req, res, next) => {
+  try {
+    const events = await eventModel.getUpcomingEventsForUser(req.params.id);
+    res.json({ count: events.length, events });
+  } catch (err) {
+    next(err);
+  }
+};
 
 exports.stats = async (req, res, next) => {
   try {
