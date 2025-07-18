@@ -46,6 +46,7 @@ const getEventStats = async (eventId) => {
     percentage_used: ((totalRegs / event.capacity) * 100).toFixed(2) + '%'
   };
 };
+
 const getParticipantsInLast30Days = async (userId) => {
   const result = await pool.query(
     `SELECT 
@@ -62,6 +63,7 @@ const getParticipantsInLast30Days = async (userId) => {
   );
   return result.rows;
 };
+
 module.exports = {
   createEvent,
   getEventById,
