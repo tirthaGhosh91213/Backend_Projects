@@ -20,6 +20,15 @@ exports.getEventDetails = async (req, res, next) => {
     next(err);
   }
 };
+exports.participateinLast30days = async (req, res, next) => {
+  try {
+    const participants = await eventModel.getParticipantsInLast30Days(req.params.id);
+    res.json(participants);
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 exports.register = async (req, res, next) => {
   try {
