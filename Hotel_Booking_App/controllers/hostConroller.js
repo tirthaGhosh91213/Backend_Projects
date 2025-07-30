@@ -3,7 +3,7 @@ const Home = require('./../models/Home');
 
 exports.getAddhome=(req,res,next)=>{
 
-  res.render('host/edit-home',{editing:false,pageTitle:'Add Home here'});
+  res.render('host/edit-home',{editing:false,pageTitle:' Add Home here'});
 
 }
 exports.getEditHome=(req,res,next)=>{
@@ -19,7 +19,7 @@ exports.getEditHome=(req,res,next)=>{
       return res.redirect("/Host-Homes");
     }
     console.log(homeID,editing,home)
-  res.render('host/edit-home',{ home:home , editing:editing , pageTitle:'Edit Home here'});
+  res.render('host/edit-home',{ home:home , editing:editing , pageTitle:' Edit Home here'});
   })
 }
 exports.postDeleteHome=(req,res,next)=>{
