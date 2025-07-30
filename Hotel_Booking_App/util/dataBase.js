@@ -6,3 +6,4 @@ const pool =mysql.createPool({
   database:'airbnb'
 
 })
+module.exports=pool.promise()

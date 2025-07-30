@@ -3,13 +3,13 @@ const Favourite = require("../models/Favourite");
 const Home=require("./../models/Home");
 
 exports.getIndex=(req,res,next)=>{
-  Home.fetchAll(registerHome=>{
+   Home.fetchAll().then(([registerHome])=>{
     res.render('store/home-page',{ homes : registerHome ,pageTitle:`Tirtha's airbnb`});
   });
   
 }
 exports.getHomes=(req,res,next)=>{
-  Home.fetchAll(registerHome=>{
+   Home.fetchAll().then(([registerHome])=>{
     res.render('store/homes',{ homes : registerHome ,pageTitle:`Here all Homes`});
   });
   
@@ -32,7 +32,7 @@ exports.postRemoveFav=(req,res,next)=>{
   const homeID= req.params.homeID;
   Favourite.deleteById(homeID,error=>{
     if(error){
-      console.log("Eroor occour while remove from home ",error);
+      console.log("Error occour while remove from home ",error);
     }
     res.redirect("/favourite")
   })
@@ -42,8 +42,7 @@ exports.postRemoveFav=(req,res,next)=>{
 exports.getFavourite=(req,res,next)=>{
   Favourite.fetchAll(favouriteIDs=>{
 
- 
-  Home.fetchAll(registerHome=>{
+  Home.fetchAll().then(([registerHome])=>{
     const favouriteHome = registerHome.filter(home=>favouriteIDs.includes(home.ID))
     res.render('store/favourite',{ homes : favouriteHome ,pageTitle:`Here all favourite Homes`});
   });

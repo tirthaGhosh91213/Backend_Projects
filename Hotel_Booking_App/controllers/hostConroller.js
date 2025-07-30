@@ -34,9 +34,8 @@ exports.postDeleteHome=(req,res,next)=>{
 }
 
 exports.postEditHome=(req,res,next)=>{
-  const {ID,houseName,price,rating,location,photoURL} =req.body;
-  const newHome=new Home(houseName,price,rating,location,photoURL);
-  newHome.ID=ID;
+  const {ID,houseName,price,rating,location,photoURL,description} =req.body;
+  const newHome=new Home(houseName,price,rating,location,photoURL,description,ID);
   newHome.save(error=>{
     if(error){
       console.log("Error is create in the code ",error)
@@ -49,15 +48,15 @@ exports.postEditHome=(req,res,next)=>{
 
 exports.getHostHome=(req,res,next)=>{
 
-  Home.fetchAll(registerHome=>{
+   Home.fetchAll().then(([registerHome])=>{
     res.render('host/Host-Homes',{ homes : registerHome ,pageTitle:`Host Homes`});
 
 });
 }
 
 exports.postAddHome=(req,res,next)=>{
-  const {houseName,price,rating,location,photoURL} =req.body;
-  const newHome=new Home(houseName,price,rating,location,photoURL);
+  const {houseName,price,rating,location,photoURL,description} =req.body;
+  const newHome=new Home(houseName,price,rating,location,photoURL,description);
   newHome.save(error=>{
     if(error){
       res.redirect('/')
