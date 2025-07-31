@@ -13,7 +13,8 @@ exports.getEditHome=(req,res,next)=>{
     console.log("Eaditing flag is not send properly ");
    return res.redirect("/Host-Homes");
   }
-  Home.findByID(homeID,home=>{
+  Home.findByID(homeID).then(([homes])=>{
+    const home =homes[0]
     if(!home){
       console.log("Home id is not found ");
       return res.redirect("/Host-Homes");
@@ -24,11 +25,10 @@ exports.getEditHome=(req,res,next)=>{
 }
 exports.postDeleteHome=(req,res,next)=>{
   const homeID=req.params.homeID;
- Home.deleteById(homeID,error=>{
-  if(error){
-    console.log("Home is not found ",error)
-  }
+ Home.deleteById(homeID).then(()=>{
   res.redirect("/Host-Homes")
+ }).catch(error=>{
+  console.log(error)
  })
  
 }
@@ -36,13 +36,13 @@ exports.postDeleteHome=(req,res,next)=>{
 exports.postEditHome=(req,res,next)=>{
   const {ID,houseName,price,rating,location,photoURL,description} =req.body;
   const newHome=new Home(houseName,price,rating,location,photoURL,description,ID);
-  newHome.save(error=>{
-    if(error){
-      console.log("Error is create in the code ",error)
-    }
-    else{
+  newHome.save().then(()=>{
+    
+   
       res.redirect("/Host-Homes")
-    }
+    
+  }).catch(error=>{
+    console.log(error)
   });
 }
 

@@ -52,7 +52,8 @@ exports.getFavourite=(req,res,next)=>{
 
 exports.getHomeDetailes=(req,res,next)=>{
   const homeID=req.params.homeID;
-  Home.findByID(homeID,home=>{
+  Home.findByID(homeID).then(([homes])=>{
+    const home=homes[0];
     if(!home){
       console.log("Home not found ")
       return res.redirect("/homes");
