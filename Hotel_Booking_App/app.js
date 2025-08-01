@@ -12,7 +12,8 @@ app.set('views','views');
 
 const {hostRouter}=require('./routers/hostRouter');
 const storeRouter=require('./routers/storeRouter');
-const errorController=require('./controllers/errorController')
+const errorController=require('./controllers/errorController');
+const mongoConnect = require('./util/dataBase');
 
 app.use(express.static(path.join(rootDir,"public")))
 app.use(bodyParser.urlencoded())
@@ -32,6 +33,10 @@ app.use(errorController.error404)
 
 
  const PORT =3001;
-app.listen(PORT,()=>{
+ mongoConnect(client=>{
+  console.log(client)
+  app.listen(PORT,()=>{
   console.log(`Server running at : http://localhost:${PORT}/`)
 });
+ })
+
