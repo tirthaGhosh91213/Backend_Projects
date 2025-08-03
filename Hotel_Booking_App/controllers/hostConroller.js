@@ -3,7 +3,7 @@ const Home = require('./../models/Home');
 
 exports.getAddhome=(req,res,next)=>{
 
-  res.render('host/edit-home',{editing:false,pageTitle:' Add Home here'});
+  res.render('host/edit-home',{editing:false,pageTitle:'  Add Home here'});
 
 }
 exports.getEditHome=(req,res,next)=>{
