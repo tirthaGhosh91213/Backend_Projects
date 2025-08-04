@@ -29,11 +29,11 @@
                   <span class="text-2xl font-bold text-blue-600">Rs<%= home.price %></span>
                   <!-- <%- include('../partials/addToFavourite', {home:home}) %>    -->
                   <a 
-                  href="homes/<%= home.ID %>"
+                  href="homes/<%= home._id %>"
                   class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
                     Details
                   </a>
-                  <form action="/favourite/remove/<%= home.ID %>" method="post">
+                  <form action="/favourite/remove/<%= home._id %>" method="post">
                     <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Remove </button>
                   </form>
                 </div>
