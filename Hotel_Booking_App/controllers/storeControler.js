@@ -17,14 +17,20 @@ exports.getHomes=(req,res,next)=>{
 exports.postFavourite=(req,res,next)=>{
   
 const homeID=req.body.ID;
+const fav=new Favourite(homeID)
+fav.save().then(result=>{
+  console.log("Favourite added",result)
+}).catch(err=>{
+  console.log("Error is occures",err)
+}).finally(()=>{
+   res.redirect("/favourite");
+})
 Favourite.addToFavourite(homeID,error=>{
   if(error){
     console.log("Here are your error add to favourite ",error)
   }
   res.redirect("/favourite");
 })
-
-
   
 }
 
@@ -62,9 +68,5 @@ exports.getHomeDetailes=(req,res,next)=>{
            console.log("Here is your Home ID ",homeID,home);
   res.render('store/homeDetails',{home:home,pageTitle:` Home Details `});
     }
-   
-
   })
-  
-
 }
