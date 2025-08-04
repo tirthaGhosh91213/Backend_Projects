@@ -15,14 +15,23 @@ module.exports= class Home{
     this.description=description;
     if(_id){
        this._id=_id;
+
     }
    
   }
 
   save(){ 
     const db=getdb();
+    const updateHome={
+      houseName:this.houseName,
+      price:this.price,
+      rating:this.rating,
+      location:this.location,
+      photoURL:this.photoURL,
+      description:this.description
+    }
     if(this._id){
-      return db.collection("homes").updateOne({_id:new ObjectId(String(homeID))},{$set:this})
+      return db.collection("homes").updateOne({_id:new ObjectId(String(this._id))},{$set:updateHome})
     }else{
       return db.collection("homes").insertOne(this)
     }

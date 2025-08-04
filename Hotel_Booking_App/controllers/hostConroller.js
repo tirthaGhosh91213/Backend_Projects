@@ -13,8 +13,8 @@ exports.getEditHome=(req,res,next)=>{
     console.log("Eaditing flag is not send properly ");
    return res.redirect("/Host-Homes");
   }
-  Home.findByID(homeID).then(([homes])=>{
-    const home =homes[0]
+  Home.findByID(homeID).then(home=>{
+  
     if(!home){
       console.log("Home id is not found ");
       return res.redirect("/Host-Homes");
