@@ -25,32 +25,30 @@ fav.save().then(result=>{
 }).finally(()=>{
    res.redirect("/favourite");
 })
-Favourite.addToFavourite(homeID,error=>{
-  if(error){
-    console.log("Here are your error add to favourite ",error)
-  }
-  res.redirect("/favourite");
-})
   
 }
 
 exports.postRemoveFav=(req,res,next)=>{
   const homeID= req.params.homeID;
-  Favourite.deleteById(homeID,error=>{
-    if(error){
-      console.log("Error occour while remove from home ",error);
-    }
-    res.redirect("/favourite")
-  })
+  Favourite.deleteById(homeID).then(result=>{
+  console.log("Favourite removed ",result)
+}).catch(err=>{
+  console.log("Error is occures",err)
+}).finally(()=>{
+   res.redirect("/favourite");
+})
   
 }
 
 exports.getFavourite=(req,res,next)=>{
-  Favourite.fetchAll(favouriteIDs=>{
+  Favourite.getFavourites().then(favouriteIDs=>{
+    favouriteIDs=favouriteIDs.map(fav=>fav.houseID)
 
   Home.fetchAll().then(registerHome=>{
-    const favouriteHome = registerHome.filter(home=>favouriteIDs.includes(home._id))
-    res.render('store/favourite',{ homes : favouriteHome ,pageTitle:`Here all favourite Homes`});
+    const favouriteHome = registerHome.filter(home=>favouriteIDs.includes(home._id.toString()))
+    res.render('store/favourite',
+      { homes : favouriteHome ,
+      pageTitle:`Here all favourite Homes`});
   });
 })
   

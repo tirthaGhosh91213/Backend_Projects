@@ -7,11 +7,19 @@ module.exports= class Favourite{
  
   save(){
     const db=getdb()
-    return db.collection("favourites").insertOne(this)
+     return db.collection("favourites").findOne({houseID:this.houseID}).then(existingFav=>{
+      if(!existingFav){
+        return db.collection("favourites").insertOne(this)
+      }else{
+        return Promise.resolve();
+      }
+     })
+    
    
   }
-  static getFavourites(callback){
-  
+  static getFavourites(){
+      const db=getdb();
+      return db.collection("favourites").find().toArray()
   }
 
   static addToFavourite(homeID,callback){
@@ -19,8 +27,9 @@ module.exports= class Favourite{
   }
   
 
-  static deleteById(removeHomeID,callback){
-   
+  static deleteById(removeHomeID){
+    const db=getdb()
+       return db.collection("favourites").deleteOne({houseID:removeHomeID})
   }
 }
 
