@@ -3,13 +3,13 @@ const Favourite = require("../models/Favourite");
 const Home=require("./../models/Home");
 
 exports.getIndex=(req,res,next)=>{
-   Home.fetchAll().then(registerHome=>{
+   Home.find().then(registerHome=>{
     res.render('store/home-page',{ homes : registerHome ,pageTitle:`Tirtha's airbnb`});
   });
   
 }
 exports.getHomes=(req,res,next)=>{
-   Home.fetchAll().then(registerHome=>{
+   Home.find().then(registerHome=>{
     res.render('store/homes',{ homes : registerHome ,pageTitle:`Here all Homes`});
   });
   
@@ -18,7 +18,7 @@ exports.postFavourite=(req,res,next)=>{
   
 const homeID=req.body.ID;
 const fav=new Favourite(homeID)
-fav.save().then(result=>{
+fav.find().then(result=>{
   console.log("Favourite added",result)
 }).catch(err=>{
   console.log("Error is occures",err)
@@ -44,7 +44,7 @@ exports.getFavourite=(req,res,next)=>{
   Favourite.getFavourites().then(favouriteIDs=>{
     favouriteIDs=favouriteIDs.map(fav=>fav.houseID)
 
-  Home.fetchAll().then(registerHome=>{
+  Home.find().then(registerHome=>{
     const favouriteHome = registerHome.filter(home=>favouriteIDs.includes(home._id.toString()))
     res.render('store/favourite',
       { homes : favouriteHome ,
@@ -56,7 +56,7 @@ exports.getFavourite=(req,res,next)=>{
 
 exports.getHomeDetailes=(req,res,next)=>{
   const homeID=req.params.homeID;
-  Home.findByID(homeID).then(home=>{
+  Home.findById(homeID).then(home=>{
     
     if(!home){
       console.log("Home not found ")

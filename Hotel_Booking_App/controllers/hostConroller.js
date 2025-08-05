@@ -13,7 +13,7 @@ exports.getEditHome=(req,res,next)=>{
     console.log("Eaditing flag is not send properly ");
    return res.redirect("/Host-Homes");
   }
-  Home.findByID(homeID).then(home=>{
+  Home.findById(homeID).then(home=>{
   
     if(!home){
       console.log("Home id is not found ");
@@ -25,7 +25,7 @@ exports.getEditHome=(req,res,next)=>{
 }
 exports.postDeleteHome=(req,res,next)=>{
   const homeID=req.params.homeID;
- Home.deleteById(homeID).then(()=>{
+ Home.findByIdAndDelete(homeID).then(()=>{
   res.redirect("/Host-Homes")
  }).catch(error=>{
   console.log(error)
@@ -35,11 +35,19 @@ exports.postDeleteHome=(req,res,next)=>{
 
 exports.postEditHome=(req,res,next)=>{
   const {ID,houseName,price,rating,location,photoURL,description} =req.body;
-  const newHome=new Home(houseName,price,rating,location,photoURL,description,ID);
-  newHome.save().then(()=>{
-    
-   
-      res.redirect("/Host-Homes")
+  Home.findById(ID).then((home)=>{
+    home.houseName=houseName,
+    home.price=price,
+    home.rating=rating,
+    home.location=location,
+    home.photoURL=photoURL,
+    home.description=description
+    home.save().then((result)=>{
+      console.log(result)
+    }).catch(error=>{
+      console.log(error)
+    })
+    res.redirect("/Host-Homes")
     
   }).catch(error=>{
     console.log(error)
@@ -48,7 +56,7 @@ exports.postEditHome=(req,res,next)=>{
 
 exports.getHostHome=(req,res,next)=>{
 
-   Home.fetchAll().then(registerHome=>{
+   Home.find().then(registerHome=>{
     res.render('host/Host-Homes',{ homes : registerHome ,pageTitle:`Host Homes`});
 
 });
@@ -56,9 +64,9 @@ exports.getHostHome=(req,res,next)=>{
 
 exports.postAddHome=(req,res,next)=>{
   const {houseName,price,rating,location,photoURL,description} =req.body;
-  const newHome=new Home(houseName,price,rating,location,photoURL,description);
+  const newHome=new Home({houseName,price,rating,location,photoURL,description});
   newHome.save().then(()=>{
-    console.log("Home saved succesfully")
+    console.log("Home findd succesfully")
   })
   res.render('host/afterAddHome',{pageTitle:'home added successfully'});
 

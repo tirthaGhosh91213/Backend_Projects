@@ -5,7 +5,7 @@ module.exports= class Favourite{
     this.houseID=houseID;
   }
  
-  save(){
+  find(){
     const db=getdb()
      return db.collection("favourites").findOne({houseID:this.houseID}).then(existingFav=>{
       if(!existingFav){
