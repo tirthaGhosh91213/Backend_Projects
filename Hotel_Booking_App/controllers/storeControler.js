@@ -28,13 +28,15 @@ Favourite.findOne({houseID:homeID}).then((fav)=>{
     })
   }
  res.redirect("/favourite");
+}).catch(err=>{
+  console.log("error is = ",err)
 })
   
 }
 
 exports.postRemoveFav=(req,res,next)=>{
   const homeID= req.params.homeID;
-  Favourite.findOndAndDELETE(homeID).then(result=>{
+  Favourite.findOneAndDelete(homeID).then(result=>{
   console.log("Favourite removed ",result)
 }).catch(err=>{
   console.log("Error is occures",err)
@@ -45,16 +47,14 @@ exports.postRemoveFav=(req,res,next)=>{
 }
 
 exports.getFavourite=(req,res,next)=>{
-  Favourite.find().then(favouriteIDs=>{
-    favouriteIDs=favouriteIDs.map(fav=>fav.houseID)
-
-  Home.find().then(registerHome=>{
-    const favouriteHome = registerHome.filter(home=>favouriteIDs.includes(home._id.toString()))
+  Favourite.find()
+  .populate('houseID')
+  .then(favouriteIDs=>{
+    const favouriteList=favouriteIDs.map(fav=>fav.houseID)
     res.render('store/favourite',
-      { homes : favouriteHome ,
+      { homes : favouriteList ,
       pageTitle:`Here all favourite Homes`});
   });
-})
   
 }
 
