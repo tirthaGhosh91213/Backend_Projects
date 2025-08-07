@@ -17,20 +17,24 @@ exports.getHomes=(req,res,next)=>{
 exports.postFavourite=(req,res,next)=>{
   
 const homeID=req.body.ID;
-const fav=new Favourite(homeID)
-fav.find().then(result=>{
-  console.log("Favourite added",result)
-}).catch(err=>{
-  console.log("Error is occures",err)
-}).finally(()=>{
-   res.redirect("/favourite");
+
+Favourite.findOne({houseID:homeID}).then((fav)=>{
+  if(fav){
+    console.log("Already maked as favourite ")
+  }else{
+    fav =new Favourite({houseID:homeID});
+    fav.save().then((result)=>{
+      console.log("Favourite added ",result)
+    })
+  }
+ res.redirect("/favourite");
 })
   
 }
 
 exports.postRemoveFav=(req,res,next)=>{
   const homeID= req.params.homeID;
-  Favourite.deleteById(homeID).then(result=>{
+  Favourite.findOndAndDELETE(homeID).then(result=>{
   console.log("Favourite removed ",result)
 }).catch(err=>{
   console.log("Error is occures",err)
@@ -41,7 +45,7 @@ exports.postRemoveFav=(req,res,next)=>{
 }
 
 exports.getFavourite=(req,res,next)=>{
-  Favourite.getFavourites().then(favouriteIDs=>{
+  Favourite.find().then(favouriteIDs=>{
     favouriteIDs=favouriteIDs.map(fav=>fav.houseID)
 
   Home.find().then(registerHome=>{
