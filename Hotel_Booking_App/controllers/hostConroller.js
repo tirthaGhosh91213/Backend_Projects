@@ -3,7 +3,7 @@ const Home = require('./../models/Home');
 
 exports.getAddhome=(req,res,next)=>{
 
-  res.render('host/edit-home',{editing:false,pageTitle:' Add Home here'});
+  res.render('host/edit-home',{editing:false,pageTitle:' Add Home here',isLoggedIn:req.isLoggedIn});
 
 }
 exports.getEditHome=(req,res,next)=>{
@@ -20,7 +20,7 @@ exports.getEditHome=(req,res,next)=>{
       return res.redirect("/Host-Homes");
     }
     console.log(homeID,editing,home)
-  res.render('host/edit-home',{ home:home , editing:editing , pageTitle:' Edit Home here'});
+  res.render('host/edit-home',{ home:home , editing:editing , pageTitle:' Edit Home here',isLoggedIn:req.isLoggedIn});
   })
 }
 exports.postDeleteHome=(req,res,next)=>{
@@ -57,7 +57,7 @@ exports.postEditHome=(req,res,next)=>{
 exports.getHostHome=(req,res,next)=>{
 
    Home.find().then(registerHome=>{
-    res.render('host/Host-Homes',{ homes : registerHome ,pageTitle:`Host Homes`});
+    res.render('host/Host-Homes',{ homes : registerHome ,pageTitle:`Host Homes`,isLoggedIn:req.isLoggedIn});
 
 });
 }
@@ -68,6 +68,6 @@ exports.postAddHome=(req,res,next)=>{
   newHome.save().then(()=>{
     console.log("Home findd succesfully")
   })
-  res.render('host/afterAddHome',{pageTitle:'home added successfully'});
+  res.render('host/afterAddHome',{pageTitle:'home added successfully',isLoggedIn:req.isLoggedIn});
 
 }

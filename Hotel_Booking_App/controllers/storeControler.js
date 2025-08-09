@@ -3,14 +3,15 @@ const Favourite = require("../models/Favourite");
 const Home=require("./../models/Home");
 
 exports.getIndex=(req,res,next)=>{
+  console.log("Session ",req.session)
    Home.find().then(registerHome=>{
-    res.render('store/home-page',{ homes : registerHome ,pageTitle:`Tirtha's airbnb`});
+    res.render('store/home-page',{ homes : registerHome ,pageTitle:`Tirtha's airbnb`,isLoggedIn:req.isLoggedIn});
   });
   
 }
 exports.getHomes=(req,res,next)=>{
    Home.find().then(registerHome=>{
-    res.render('store/homes',{ homes : registerHome ,pageTitle:`Here all Homes`});
+    res.render('store/homes',{ homes : registerHome ,pageTitle:`Here all Homes`,isLoggedIn:req.isLoggedIn});
   });
   
 }
@@ -53,7 +54,7 @@ exports.getFavourite=(req,res,next)=>{
     const favouriteList=favouriteIDs.map(fav=>fav.houseID)
     res.render('store/favourite',
       { homes : favouriteList ,
-      pageTitle:`Here all favourite Homes`});
+      pageTitle:`Here all favourite Homes`,isLoggedIn:req.isLoggedIn});
   });
   
 }
@@ -68,7 +69,7 @@ exports.getHomeDetailes=(req,res,next)=>{
     }
     else{
            console.log("Here is your Home ID ",homeID,home);
-  res.render('store/homeDetails',{home:home,pageTitle:` Home Details `});
+  res.render('store/homeDetails',{home:home,pageTitle:` Home Details `,isLoggedIn:req.isLoggedIn});
     }
   })
 }
