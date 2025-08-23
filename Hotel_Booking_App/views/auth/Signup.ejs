@@ -1,0 +1,134 @@
+<%- include('../partials/title')%>
+</head>
+<body class="bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600 text-gray-800 flex flex-col items-center justify-center min-h-screen px-4">
+  <%- include('../partials/nav')%>
+
+  <!-- Signup Card -->
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg text-center mt-16">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">Welcome 👋</h1>
+    <p class="text-gray-600 mb-6">Create your account and join the community</p>
+
+    <!-- Error messages -->
+    <% if (typeof errors !== "undefined" && errors.length > 0) { %>
+      <div class="bg-red-500 text-white p-3 rounded-lg mb-5 text-left">
+        <ul class="list-disc list-inside">
+          <% errors.forEach(function(error) { %>
+            <li><%= error %></li>
+          <% }) %>
+        </ul>
+      </div>
+    <% } %>
+
+    <!-- Form -->
+    <form action="/signup" method="post" class="space-y-5">
+
+      <!-- Name -->
+      <div class="flex items-center bg-gray-100 rounded-lg border border-gray-300 px-3 py-2">
+        <i class="fas fa-user text-gray-500 mr-2"></i>
+        <input 
+          type="text" 
+          required
+          placeholder="Enter your Name" 
+          name="userName" 
+          value="<%= oldInput && oldInput.userName ? oldInput.userName : '' %>"
+          class="w-full bg-transparent focus:outline-none text-gray-800 placeholder-gray-500"
+        >
+      </div>
+
+      <!-- Email -->
+      <div class="flex items-center bg-gray-100 rounded-lg border border-gray-300 px-3 py-2">
+        <i class="fas fa-envelope text-gray-500 mr-2"></i>
+        <input 
+          type="email" 
+          required
+          placeholder="Enter your email" 
+          name="email" 
+          value="<%= oldInput && oldInput.email ? oldInput.email : '' %>"
+          class="w-full bg-transparent focus:outline-none text-gray-800 placeholder-gray-500"
+        >
+      </div>
+     
+      <!-- Password -->
+      <div class="flex items-center bg-gray-100 rounded-lg border border-gray-300 px-3 py-2">
+        <i class="fas fa-lock text-gray-500 mr-2"></i>
+        <input 
+          type="password" 
+          required
+          placeholder="Enter your password" 
+          name="password" 
+          value="<%= oldInput && oldInput.password ? oldInput.password : '' %>"
+          class="w-full bg-transparent focus:outline-none text-gray-800 placeholder-gray-500"
+        >
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="flex items-center bg-gray-100 rounded-lg border border-gray-300 px-3 py-2">
+        <i class="fas fa-lock text-gray-500 mr-2"></i>
+        <input 
+          type="password" 
+          required
+          placeholder="Confirm your password" 
+          name="ConfirmPassword" 
+          value="<%= oldInput && oldInput.ConfirmPassword ? oldInput.ConfirmPassword : '' %>"
+          class="w-full bg-transparent focus:outline-none text-gray-800 placeholder-gray-500"
+        >
+      </div>
+
+      <!-- User Role -->
+      <div class="flex items-center justify-between bg-gray-100 rounded-lg border border-gray-300 px-4 py-3">
+        <span class="text-gray-800 font-semibold">User Role</span>
+        <div class="flex space-x-6">
+          <label class="flex items-center space-x-2 cursor-pointer">
+            <input 
+              type="radio" 
+              name="userRole" 
+              value="guest"
+              <%= oldInput && oldInput.userRole === "guest" ? "checked" : "" %>
+            >
+            <span class="text-gray-800">Guest</span>
+          </label>
+
+          <label class="flex items-center space-x-2 cursor-pointer">
+            <input 
+              type="radio" 
+              name="userRole" 
+              value="host"
+              <%= oldInput && oldInput.userRole === "host" ? "checked" : "" %>
+            >
+            <span class="text-gray-800">Host</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Checkbox -->
+      <label class="flex items-center space-x-3 cursor-pointer justify-center">
+        <input 
+          type="checkbox" 
+          name="terms" 
+          required 
+          value="Confirm the checkbox"
+          class="w-5 h-5"
+        >
+        <span class="text-gray-700">I agree to the 
+          <span class="underline hover:text-indigo-600 cursor-pointer">terms & conditions</span>
+        </span>
+      </label>
+
+      <!-- Submit Button -->
+      <div class="flex justify-center">
+        <button 
+          type="submit" 
+          class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 
+                 rounded-xl transition duration-300 ease-in-out transform hover:scale-105 
+                 shadow-lg"
+        >
+          Sign Up
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- FontAwesome CDN -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
